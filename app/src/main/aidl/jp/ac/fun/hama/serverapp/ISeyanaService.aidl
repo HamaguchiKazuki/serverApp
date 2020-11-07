@@ -5,4 +5,5 @@ package jp.ac.fun.hama.serverapp;
 
 interface ISeyanaService {
     String returnFixedLetter();
+    void streamSeyana();
 }
