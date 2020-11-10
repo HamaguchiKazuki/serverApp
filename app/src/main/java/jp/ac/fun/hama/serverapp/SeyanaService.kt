@@ -4,6 +4,7 @@ import android.app.Service
 import android.content.Intent
 import android.net.Uri
 import android.os.IBinder
+import android.os.Process
 import android.util.Log
 
 class SeyanaService : Service() {
@@ -11,18 +12,17 @@ class SeyanaService : Service() {
 
     private val mBinder = object : ISeyanaService.Stub() {
         override fun returnFixedLetter(): String {
-            Log.d(tag, "Seyana. return fixed letter implemented")
-            return "Seyana."
+            val seyanaGachaList: Array<String> = arrayOf("Seyana", "Sorena" , "Wakaru")
+            val seyanaOnePick: String = seyanaGachaList.get((0..2).shuffled().first())
+            Log.d(tag, "${seyanaOnePick} return fixed letter implemented")
+            return seyanaOnePick
         }
 
         override fun streamSeyana() {
             Log.d(tag, "streamSeyana")
             val uri = "https://www.youtube.com/watch?v=OVuYIMa5XBw&t=12s&ab_channel=GYARI"
-//            val packageName = "com.google.android.youtube"
-//            val className = "com.google.android.youtube.app.honeycomb.Shell\\\$HomeActivity"
             Intent(Intent.ACTION_VIEW).also { seyanaIntent ->
                 seyanaIntent.data = Uri.parse(uri)
-//                seyanaIntent.setClassName(packageName,className)
                 seyanaIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(seyanaIntent)
             }
@@ -30,6 +30,12 @@ class SeyanaService : Service() {
     }
 
     override fun onBind(intent: Intent): IBinder {
+        Log.d(tag, "bind")
         return mBinder
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        Log.d(tag, "unbind")
+        return super.onUnbind(intent)
     }
 }
