@@ -13,8 +13,9 @@ class SeyanaService : Service() {
     private val mBinder = object : ISeyanaService.Stub() {
         override fun returnFixedLetter(): String {
             val seyanaGachaList: Array<String> = arrayOf("Seyana", "Sorena" , "Wakaru")
-            val seyanaOnePick: String = seyanaGachaList.get((0..2).shuffled().first())
-            Log.d(tag, "${seyanaOnePick} return fixed letter implemented")
+            val gachaIndex = (0..2).shuffled().first()
+            val seyanaOnePick: String = seyanaGachaList[gachaIndex]
+            Log.d(tag, "$seyanaOnePick return fixed letter implemented")
             return seyanaOnePick
         }
 
